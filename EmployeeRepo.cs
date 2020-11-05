@@ -186,7 +186,6 @@ namespace EmployeeFullStack
             }
         }
 
-
         public bool GetEmployeesInRange(DateTime startDate, DateTime endDate)
         {
             SqlConnection connection = null;
@@ -234,5 +233,47 @@ namespace EmployeeFullStack
                 connection.Close();
             }
         }
+
+        public bool GetStatsByGender()
+        {
+            SqlConnection connection = getConnect();
+            try
+            {
+
+                Employee employee = new Employee();
+                using (connection)
+                {
+                    string query = @"select gender,SUM(basic_Pay),AVG(basic_Pay),MIN(basic_Pay),MAX(basic_Pay),COUNT(basic_Pay) from employee_payroll group by gender";
+
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    //Check if there are records
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            Console.WriteLine(dataReader.GetString(0) + ":- Sum=" + dataReader.GetDecimal(1) + " Average=" + dataReader.GetDecimal(2) + " Minimum=" + dataReader.GetDecimal(3) + " Count=" + dataReader.GetDecimal(4));
+                            Console.WriteLine(employee.ToString());
+                        }
+                    }
+                    else
+                        Console.WriteLine("Has no data");
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + e.StackTrace);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
     }
 }
