@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AddressBookFullStack\EmployeeFullStack.csproj" />
+    <ProjectReference Include="..\EmployeeFullStack.csproj" />
   </ItemGroup>
 
 </Project>

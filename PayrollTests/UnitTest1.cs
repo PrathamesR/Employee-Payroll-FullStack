@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EmployeeFullStack;
+using System;
 
 namespace PayrollTests
 {
@@ -26,7 +27,7 @@ namespace PayrollTests
 
         //UC3
         [TestMethod]
-        public void TestMethod4()
+        public void TestMethod3()
         {
             EmployeeRepo employeeRepo = new EmployeeRepo();
             bool success = employeeRepo.UpdateSalary("Terisa",3000000);
@@ -36,10 +37,19 @@ namespace PayrollTests
 
         //UC4-Refractor
         [TestMethod]
-        public void TestMethod3()
+        public void TestMethod4()
         {
             EmployeeRepo employeeRepo = new EmployeeRepo();
             bool success = employeeRepo.GetEmployeeByName("Terisa");
+            Assert.IsTrue(success);
+        }
+        
+        //UC5
+        [TestMethod]
+        public void TestMethod5()
+        {
+            EmployeeRepo employeeRepo = new EmployeeRepo();
+            bool success = employeeRepo.GetEmployeesInRange(DateTime.Parse("1/12/2019"), DateTime.Parse("1/12/2020"));
             Assert.IsTrue(success);
         }
     }

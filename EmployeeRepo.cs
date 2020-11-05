@@ -185,5 +185,54 @@ namespace EmployeeFullStack
                 connection.Close();
             }
         }
+
+
+        public bool GetEmployeesInRange(DateTime startDate, DateTime endDate)
+        {
+            SqlConnection connection = null;
+            try
+            {
+                connection = getConnect();
+                using (connection)
+                {
+                    connection.Open();
+                    Employee employee = new Employee();
+                    SqlCommand command = new SqlCommand("GetEmployeesJoinedInRange", connection);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@startDate", startDate.Date.ToShortDateString()); ;
+                    command.Parameters.AddWithValue("@endDate", startDate.Date.ToShortDateString());
+
+                    SqlDataReader dr = command.ExecuteReader();
+
+                    if(dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            employee.EmployeeID = dr.GetInt32(0);
+                            employee.EmployeeName = dr.GetString(1);
+                            if (dr["phoneNo"] != DBNull.Value)
+                                employee.PhoneNumber = dr.GetDecimal(4).ToString();
+                            employee.Department = dr.GetString(5);
+                            employee.Address = dr.GetString(6);
+                            employee.StartDate = dr.GetDateTime(3);
+                            employee.Gender = dr.GetString(7)[0];
+                            employee.BasicPay = Convert.ToInt32(dr.GetDecimal(2));
+
+                            Console.WriteLine(employee.ToString());
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

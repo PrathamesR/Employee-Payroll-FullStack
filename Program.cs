@@ -11,10 +11,13 @@ namespace EmployeeFullStack
         static void Main(string[] args)
         {
             EmployeeRepo repo = new EmployeeRepo();
-
+            /*
            // repo.AddNewEmployee("abc", 30000, DateTime.Now, "Mech", "4781592360", "Thane", 'M');
             Console.WriteLine("sfadf");
             repo.GetAllEmployee();
+            Console.Read();
+            */
+            Console.WriteLine(DateTime.Now.Date.ToShortDateString());
             Console.Read();
         }
     }
